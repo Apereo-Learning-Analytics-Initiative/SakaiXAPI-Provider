@@ -56,7 +56,7 @@ lrs.tincanapi.basicAuthUserPass=UUUUUU:PPPPPP
 ============
 INSTALLATION
 ============
-Requires version 2.10 of Sakai or better.
+Requires version 10 of Sakai or better.
 
 Download or checkout the Unicon TinCanAPI provider (this README is part of it).
 https://github.com/Apereo-Learning-Analytics-Initiative/SakaiXAPI-Provider
