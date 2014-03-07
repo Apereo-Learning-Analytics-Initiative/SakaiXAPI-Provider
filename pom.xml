@@ -1,0 +1,173 @@
+<?xml version="1.0"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <name>Sakai tincanapi LRS Provider</name>
+  <artifactId>tincanapi-provider-base</artifactId>
+  <version>1.0-SNAPSHOT</version>
+  <packaging>pom</packaging>
+
+  <!-- Sakai master pom is the parent -->
+  <parent>
+    <artifactId>master</artifactId>
+    <groupId>org.sakaiproject</groupId>
+    <version>2.10-SNAPSHOT</version>
+    <relativePath>../master/pom.xml</relativePath>
+  </parent>
+
+  <properties>
+    <build-timestamp>${maven.build.timestamp}</build-timestamp>
+    <maven.build.timestamp.format>yyyyMMdd</maven.build.timestamp.format>
+  </properties>
+
+  <modules>
+    <module>impl</module>
+    <module>pack</module>
+  </modules>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.sakaiproject</groupId>
+        <artifactId>tincanapi-provider-impl</artifactId>
+        <version>1.0-SNAPSHOT</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
+  <build>
+    <!-- configure the build to use the standard maven structure -->
+    <sourceDirectory>src/main/java</sourceDirectory>
+    <resources>
+      <resource>
+        <directory>${basedir}/src/main/java</directory>
+        <includes>
+          <include>**/*.xml</include>
+        </includes>
+      </resource>
+      <resource>
+        <directory>${basedir}/src/main/resources</directory>
+        <filtering>true</filtering>
+        <includes>
+          <include>**/*</include>
+        </includes>
+      </resource>
+    </resources>
+    <testSourceDirectory>src/test/java</testSourceDirectory>
+    <testResources>
+      <testResource>
+        <directory>${basedir}/src/main/webapp/WEB-INF</directory>
+        <includes>
+          <include>*.xml</include>
+        </includes>
+      </testResource>
+      <testResource>
+        <directory>${basedir}/src/test/resources</directory>
+        <includes>
+          <include>**/*</include>
+        </includes>
+      </testResource>
+    </testResources>
+    <plugins>
+      <plugin>
+        <!-- configure the war plugin to correctly use the standard maven structure -->
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-war-plugin</artifactId>
+        <configuration>
+          <warSourceDirectory>${basedir}/src/main/webapp</warSourceDirectory>
+          <ouputDirectory>${project.build.directory}</ouputDirectory>
+        </configuration>
+      </plugin>
+      <plugin>
+        <!-- Used to replace the headers of files with proper licenses - http://code.google.com/p/maven-license-plugin - 
+          Run mvn license:format to fix up licenses on all files in the project -->
+        <groupId>com.mycila.maven-license-plugin</groupId>
+        <artifactId>maven-license-plugin</artifactId>
+        <version>1.9.0</version>
+        <configuration>
+          <strictCheck>true</strictCheck>
+          <header>${basedir}/LICENSE_HEADER</header>
+          <properties>
+            <name>${project.name}</name>
+            <year>${project.inceptionYear}</year>
+            <holder>Unicon (R)</holder>
+          </properties>
+          <excludes>
+            <exclude>target/**</exclude>
+            <exclude>m2-target/**</exclude>
+            <exclude>**/*.properties</exclude>
+            <exclude>**/*.txt</exclude>
+            <exclude>LICENSE*</exclude>
+            <exclude>**/README</exclude>
+            <exclude>bin/**</exclude>
+          </excludes>
+          <mapping>
+            <tag>DYNASCRIPT_STYLE</tag>
+          </mapping>
+          <encoding>UTF-8</encoding>
+        </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>check</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+
+  <!-- ensure master jars can be found -->
+  <repositories>
+    <repository>
+      <id>sakai-maven</id>
+      <name>Sakai Maven Repo</name>
+      <layout>default</layout>
+      <url>http://source.sakaiproject.org/maven2</url>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+    </repository>
+  </repositories>
+
+  <licenses>
+    <license>
+      <name>ECL 2.0</name>
+      <distribution>repo</distribution>
+      <url>http://www.osedu.org/licenses/ECL-2.0/</url>
+    </license>
+  </licenses>
+
+  <scm>
+    <connection>scm:svn:https://source.sakaiproject.org/svn/msub/unicon.net/tincanapi-provider/trunk</connection>
+    <developerConnection>scm:svn:https://source.sakaiproject.org/svn/msub/unicon.net/tincanapi-provider/trunk</developerConnection>
+    <url>https://source.sakaiproject.org/viewsvn/msub/unicon.net/tincanapi-provider/trunk</url>
+  </scm>
+
+  <distributionManagement>
+    <repository>
+      <id>Sakai-Maven2</id>
+      <name>Sakaiproject Maven 2 repository</name>
+      <url>dav:https://source.sakaiproject.org/maven2</url>
+    </repository>
+    <site>
+      <id>local site</id>
+      <url>file:/tmp/tincanapi/site/</url>
+    </site>
+  </distributionManagement>
+
+  <developers>
+    <developer>
+      <id>aaronz@vt.edu</id>
+      <name>Aaron Zeckoski</name>
+      <email>azeckoski@vt.edu</email>
+      <url>http://tinyurl.com/azprofile</url>
+      <roles>
+        <role>Architect</role>
+        <role>Developer</role>
+      </roles>
+      <timezone>-5</timezone>
+    </developer>
+  </developers>
+
+</project>

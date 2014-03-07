@@ -1,0 +1,82 @@
+This is the Sakai tincanapi LRS provider.
+Developed by Aaron Zeckoski (Lead) and Charles Hasegawa of Unicon (http://www.unicon.net/) for Universetiet Van Amsterdam (http://www.uva.nl/)
+
+=======
+Summary
+=======
+This is an implementation of the /kernel/api/src/main/java/org/sakaiproject/event/api/LearningResourceStoreProvider.java.
+
+Provides support for Sakai to work with Learning Record Stores (LRS)
+Allows centralized registration of LRS activity statements which Sakai
+will then route over to the configured LRS system (via the Experience API (XAPI)).
+See https://jira.sakaiproject.org/browse/KNL-1042
+
+http://en.wikipedia.org/wiki/Learning_Record_Store 
+A Learning Record Store (LRS) is a data store that serve as a repository for learning records 
+necessary for using the Experience API (XAPI). The Experience API (XAPI) is also known as "next-gen SCORM" 
+or previously the TinCanAPI. The concept of the LRS was introduced to the e-learning industry in 2011, 
+and is a shift to the way e-learning specifications function.
+
+=============
+CONFIGURATION
+=============
+Add the following to your Sakai config properties file
+
+# Enable LRS processing
+# Default: false
+lrs.enabled=true
+
+# Enable statement origin filters (cause certain statements to be skipped based on their origin)
+# NOTE: most origins are the names of the tools. e.g. assignments, announcement, calendar, chat, content, gradebook, lessonbuilder, news, podcast, syllabus, webcontent, rwiki
+# Default: No filters (all statements processed)
+#lrs.origins.filter=tool1,tool2,tool3
+
+## TinCanAPI specific config settings
+# URL to the tincan server
+# Default: https://cloud.scorm.com/ScormEngineInterface/TCAPI/50ZLHZXM0Q/statements (this is a test account)
+lrs.tincanapi.url=https://url/to/your/tincan/server/api/path
+# Timeout for requests to the tincan server (in ms)
+# Default: 5000 (5 seconds)
+#lrs.tincanapi.request.timeout=10000
+## LRS Authentication
+# This will use OAuth if configured OR Basic Auth if OAuth is not setup,
+# the Auth config is required so if these are both blank then the provider will fail to startup
+# Basic Auth header value: base64(username + ":" + password)
+# Default: 50ZLHZXM0Q:crCPCRQCoqiQN9rkliIJlLiVzk0CjsuDc52mik29 (matches the default URL above)
+lrs.tincanapi.basicAuthUserPass=UUUUUU:PPPPPP
+# OAuth settings (no defaults)
+# OAuth shared (consumer) key
+#lrs.tincanapi.consumer.key=XXXXXX
+# OAuth secret
+#lrs.tincanapi.consumer.secret=YYYYY
+# OAuth realm
+#lrs.tincanapi.realm=ZZZZZ
+
+
+============
+INSTALLATION
+============
+Requires version 2.10 of Sakai or better.
+
+Download or checkout the Unicon TinCanAPI provider (this README is part of it).
+https://github.com/Apereo-Learning-Analytics-Initiative/SakaiXAPI-Provider
+
+Build the code using maven 2 or 3:
+mvn clean install sakai:deploy
+
+Add the config (as shown in the config section above).
+
+Restart the Sakai server and check the logs. You should see some LRS INFO logs 
+about a successful init OR error messages that explain the problem.
+
+
+---------------------
+NOTES for 2.9.x users
+---------------------
+There are patches in the following tickets that you will need to apply to Sakai 2.9:
+https://jira.sakaiproject.org/browse/KNL-1043
+https://jira.sakaiproject.org/browse/KNL-1045
+https://jira.sakaiproject.org/browse/SAK-23566
+
+
+-Aaron Zeckoski (azeckoski @ unicon.net) (azeckoski @ vt.edu)
