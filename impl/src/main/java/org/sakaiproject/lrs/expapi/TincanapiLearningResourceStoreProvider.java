@@ -286,7 +286,7 @@ public class TincanapiLearningResourceStoreProvider implements LearningResourceS
                     logger.debug(id + " LRS provider successfully sent statement: " + statement);
             } else {
                 logger.warn(id + " LRS provider failed (" + response.getResponseCode() + " " + response.getResponseMessage()
-                        + ") sending statement (" + statement + "), response: " + response.getResponseBody());
+                        + ") sending statement (" + statement + ") to ("+url+"), response: " + response.getResponseBody());
             }
         } catch (Exception e) {
             logger.error(id + " LRS provider exception (" + e + "): Statement was not sent.\n Statement data: " + data);

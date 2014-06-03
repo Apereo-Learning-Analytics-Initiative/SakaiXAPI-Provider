@@ -11,7 +11,7 @@
   <parent>
     <artifactId>master</artifactId>
     <groupId>org.sakaiproject</groupId>
-    <version>2.10-SNAPSHOT</version>
+    <version>10-SNAPSHOT</version>
     <relativePath>../master/pom.xml</relativePath>
   </parent>
 
@@ -100,6 +100,8 @@
             <exclude>LICENSE*</exclude>
             <exclude>**/README</exclude>
             <exclude>bin/**</exclude>
+            <exclude>.idea/**</exclude>
+            <exclude>**/*.iml</exclude>
           </excludes>
           <mapping>
             <tag>DYNASCRIPT_STYLE</tag>
