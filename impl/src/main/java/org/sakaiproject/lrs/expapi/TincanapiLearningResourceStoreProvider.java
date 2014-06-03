@@ -361,11 +361,12 @@ public class TincanapiLearningResourceStoreProvider implements LearningResourceS
         if (!urlValidator.isValid(url)) {
             throw new IllegalStateException("Invalid " + id + " LRS provider url (" + url + "), correct the " + configPrefix
                     + "url config value");
-        } else {
+        } /* won't work with some LRS
+        else {
             if (!url.endsWith("/")) {
                 url = url + "/";
             }
-        }
+        }*/
 
         value = configurationService.getConfig(configPrefix + "request.timeout", "");
         try {
