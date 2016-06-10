@@ -37,7 +37,7 @@ public class StatementMapUtils implements LRSKeys {
      * @return a map of the actor values
      */
     public static Map<String, String> getActorMap(LRS_Actor actor) {
-        HashMap<String, String> actorMap = new NonNullValueHashMap<>();
+        HashMap<String, String> actorMap = new NonNullValueHashMap<String, String>();
         actorMap.put(LRSActorKey.mbox.toString(), actor.getMbox());
         actorMap.put(LRSActorKey.name.toString(), actor.getName());
         actorMap.put(LRSActorKey.objectType.toString(), actor.getObjectType());
@@ -49,7 +49,7 @@ public class StatementMapUtils implements LRSKeys {
      * @return a map of the values from the context
      */
     public static Map<String, Object> getContextMap(LRS_Context context) {
-        HashMap<String, Object> contextMap = new NonNullValueHashMap<>();
+        HashMap<String, Object> contextMap = new NonNullValueHashMap<String, Object>();
         contextMap.put(LRSContextKey.contextActivities.toString(), context.getActivitiesMap());
 
         // Instructor optional
@@ -69,12 +69,12 @@ public class StatementMapUtils implements LRSKeys {
      * @return a map of the values from the LRS object
      */
     public static Map<String, Object> getObjectMap(LRS_Object lrsObject) {
-        HashMap<String, Object> definitionMap = new NonNullValueHashMap<>();
+        HashMap<String, Object> definitionMap = new NonNullValueHashMap<String, Object>();
         definitionMap.put(LRSDefinitionKey.name.toString(), lrsObject.getActivityName());
         definitionMap.put(LRSDefinitionKey.type.toString(), lrsObject.getActivityType());
         definitionMap.put(LRSDefinitionKey.description.toString(), lrsObject.getDescription());
 
-        HashMap<String, Object> objectMap = new NonNullValueHashMap<>();
+        HashMap<String, Object> objectMap = new NonNullValueHashMap<String, Object>();
         objectMap.put(LRSObjectKey.id.toString(), lrsObject.getId());
         objectMap.put(LRSObjectKey.objectType.toString(), "Activity");
         objectMap.put(LRSObjectKey.definition.toString(), definitionMap);
@@ -87,7 +87,7 @@ public class StatementMapUtils implements LRSKeys {
      * @return a map of the values from the LRS result
      */
     public static Map<String, Object> getResultMap(LRS_Result result) {
-        HashMap<String, Object> resultMap = new NonNullValueHashMap<>();
+        HashMap<String, Object> resultMap = new NonNullValueHashMap<String, Object>();
         resultMap.put(LRSResultKey.completion.toString(), result.getCompletion());
 
         // Duration has to be formatted to https://en.wikipedia.org/wiki/ISO_8601#Durations
@@ -97,7 +97,7 @@ public class StatementMapUtils implements LRSKeys {
 
         // Grade should only be set if there is no numeric value set
         if (StringUtils.isEmpty(result.getGrade())) {
-            HashMap<String, Object> scoreMap = new NonNullValueHashMap<>();
+            HashMap<String, Object> scoreMap = new NonNullValueHashMap<String, Object>();
             scoreMap.put(LRSScoreKey.max.toString(), result.getMax());
             scoreMap.put(LRSScoreKey.min.toString(), result.getMin());
             scoreMap.put(LRSScoreKey.raw.toString(), result.getRaw());
@@ -105,19 +105,19 @@ public class StatementMapUtils implements LRSKeys {
 
             resultMap.put(LRSResultKey.score.toString(), scoreMap);
         } else {
-            HashMap<String, Object> name = new NonNullValueHashMap<>();
+            HashMap<String, Object> name = new NonNullValueHashMap<String, Object>();
             name.put("en-US", result.getGrade());
 
-            HashMap<String, Object> definition = new NonNullValueHashMap<>();
+            HashMap<String, Object> definition = new NonNullValueHashMap<String, Object>();
             definition.put(LRSDefinitionKey.type.toString(), "http://sakaiproject.org/xapi/activitytypes/grade_classification");
             definition.put(LRSDefinitionKey.name.toString(), name);
 
-            HashMap<String, Object> classification = new NonNullValueHashMap<>();
+            HashMap<String, Object> classification = new NonNullValueHashMap<String, Object>();
             classification.put(LRSObjectKey.objectType.toString(), "activity");
             classification.put(LRSObjectKey.id.toString(), "http://sakaiproject.org/xapi/activities/" + result.getGrade());
             classification.put(LRSObjectKey.definition.toString(), definition);
 
-            HashMap<String, Object> extensions = new NonNullValueHashMap<>();
+            HashMap<String, Object> extensions = new NonNullValueHashMap<String, Object>();
             extensions.put("http://sakaiproject.org/xapi/extensions/result/classification", classification);
 
             resultMap.put(LRSResultKey.extensions.toString(), extensions);
@@ -133,7 +133,7 @@ public class StatementMapUtils implements LRSKeys {
      * @return a map of values from the LRS verb
      */
     public static Map<String, Object> getVerbMap(LRS_Verb verb) {
-        HashMap<String, Object> result = new NonNullValueHashMap<>();
+        HashMap<String, Object> result = new NonNullValueHashMap<String, Object>();
         result.put(LRSVerbKey.id.toString(), verb.getId());
         result.put(LRSVerbKey.display.toString(), verb.getDisplay());
 

@@ -55,7 +55,7 @@ public class TincanapiLearningResourceStoreProvider implements LearningResourceS
     private static final Logger logger = LoggerFactory.getLogger(TincanapiLearningResourceStoreProvider.class);
 
     private static final String apiVersion = "1.0.0";
-    private static final HashMap<String, String> EMPTY_PARAMS = new HashMap<>(0);
+    private static final HashMap<String, String> EMPTY_PARAMS = new HashMap<String, String>(0);
     private static final FastDateFormat FORMATTER = DateFormatUtils.ISO_DATETIME_TIME_ZONE_FORMAT;
     private static final String TEST_CONN_MESSAGE = "{\"actor\": {\"mbox\": \"mailto:no-reply@sakaiTCAPI.com\",\"name\": \"Sakai startup connection test\",\"objectType\": \"Agent\"},\"verb\": {\"id\": \"http://adlnet.gov/expapi/verbs/interacted\",\"display\": {\"en-US\": \"interacted\"}},\"object\": {\"id\": \"http://www.example.com/tincan/activities/OyeZsHFR\",\"objectType\": \"Activity\",\"definition\": {\"name\": {\"en-US\": \"Example Activity\"}}}}";
     private static final boolean GUARANTEE_SSL = true;
@@ -97,7 +97,7 @@ public class TincanapiLearningResourceStoreProvider implements LearningResourceS
      * @return create a JSON string from the various elements of the supplied statement
      */
     private String convertLRS_StatementToJSON(LRS_Statement statement) {
-        HashMap<String, Object> statementMap = new HashMap<>();
+        HashMap<String, Object> statementMap = new HashMap<String, Object>();
 
         // Actor, verb and object are required
         try {
@@ -192,7 +192,7 @@ public class TincanapiLearningResourceStoreProvider implements LearningResourceS
         // Don't allow api version to be configured... we only should be reporting it
         logger.info("{} LRS provider (version {}) configured: {}", id, apiVersion, url);
         
-        headers = new HashMap<>(3);
+        headers = new HashMap<String, String>(3);
         headers.put("Content-Type", "application/json");
         headers.put("X-Experience-API-Version", apiVersion);
 

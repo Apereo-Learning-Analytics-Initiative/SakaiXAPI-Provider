@@ -5,7 +5,7 @@
   <parent>
     <artifactId>tincanapi-provider-base</artifactId>
     <groupId>org.sakaiproject</groupId>
-    <version>11-SNAPSHOT</version>
+    <version>10-SNAPSHOT</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
   <name>Sakai tincanapi LRS Provider Impl</name>
@@ -44,7 +44,7 @@
     <dependency>
       <groupId>org.sakaiproject.basiclti</groupId>
       <artifactId>basiclti-util</artifactId>
-      <version>11-SNAPSHOT</version>
+      <version>10-SNAPSHOT</version>
     </dependency>
 
     <dependency>
