@@ -5,10 +5,9 @@
   <parent>
     <artifactId>tincanapi-provider-base</artifactId>
     <groupId>org.sakaiproject</groupId>
-    <version>11-SNAPSHOT</version>
+    <version>1.0-SNAPSHOT</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
-
   <name>Sakai tincanapi LRS Provider Pack</name>
   <artifactId>tincanapi-provider-pack</artifactId>
   <organization>
@@ -17,7 +16,6 @@
   </organization>
   <inceptionYear>2013</inceptionYear>
   <packaging>sakai-component</packaging>
-
   <properties>
     <deploy.target>components</deploy.target>
   </properties>
@@ -32,5 +30,4 @@
   <build>
     <resources />
   </build>
-
 </project>
