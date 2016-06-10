@@ -4,14 +4,13 @@
   <modelVersion>4.0.0</modelVersion>
   <name>Sakai tincanapi LRS Provider</name>
   <artifactId>tincanapi-provider-base</artifactId>
-  <version>1.0-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <!-- Sakai master pom is the parent -->
   <parent>
     <artifactId>master</artifactId>
     <groupId>org.sakaiproject</groupId>
-    <version>10-SNAPSHOT</version>
+    <version>11-SNAPSHOT</version>
     <relativePath>../master/pom.xml</relativePath>
   </parent>
 
@@ -30,7 +29,7 @@
       <dependency>
         <groupId>org.sakaiproject</groupId>
         <artifactId>tincanapi-provider-impl</artifactId>
-        <version>1.0-SNAPSHOT</version>
+        <version>11-SNAPSHOT</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
@@ -69,6 +68,15 @@
       </testResource>
     </testResources>
     <plugins>
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <version>3.5.1</version>
+            <configuration>
+                <source>${sakai.jdk.version}</source>
+                <target>${sakai.jdk.version}</target>
+            </configuration>
+        </plugin>
       <plugin>
         <!-- configure the war plugin to correctly use the standard maven structure -->
         <groupId>org.apache.maven.plugins</groupId>
@@ -169,6 +177,15 @@
         <role>Developer</role>
       </roles>
       <timezone>-5</timezone>
+    </developer>
+    <developer>
+      <id>rlong@unicon.net</id>
+      <name>Robert Long</name>
+      <email>rlong@unicon.net</email>
+      <roles>
+        <role>Engineer</role>
+      </roles>
+      <timezone>-7</timezone>
     </developer>
   </developers>
 
