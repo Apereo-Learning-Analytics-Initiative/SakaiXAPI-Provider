@@ -22,12 +22,14 @@ package org.sakaiproject.lrs.expapi.model;
  */
 public interface LRSKeys {
 
+    static final String INVERSE_FUNCTIONAL_IDENTIFIER_PROPERTY = "lrs.tincanapi.inverse.functional.identifier";
+
     public static enum LRSStatementKey {
         actor, context, object, result, stored, timestamp, verb;
     }
 
     public static enum LRSActorKey {
-        mbox, name, objectType
+        mbox, name, objectType, openid, account, homePage
     }
 
     public static enum LRSContextKey {
@@ -52,6 +54,10 @@ public interface LRSKeys {
 
     public static enum LRSResultKey {
         completion, duration, score, extensions, success, response
+    }
+
+    public static enum LRSIdentifierKey {
+        mbox, mbox_sha1sum, openid, account
     }
 
 }
