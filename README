@@ -1,5 +1,5 @@
 This is the Sakai tincanapi LRS provider.
-Developed by Aaron Zeckoski (Lead) and Charles Hasegawa of Unicon (http://www.unicon.net/) for Universetiet Van Amsterdam (http://www.uva.nl/)
+Developed by Aaron Zeckoski (Lead), Robert Long, and Charles Hasegawa of Unicon (http://www.unicon.net/) for Universetiet Van Amsterdam (http://www.uva.nl/)
 
 =======
 Summary
@@ -12,9 +12,9 @@ will then route over to the configured LRS system (via the Experience API (XAPI)
 See https://jira.sakaiproject.org/browse/KNL-1042
 
 http://en.wikipedia.org/wiki/Learning_Record_Store 
-A Learning Record Store (LRS) is a data store that serve as a repository for learning records 
-necessary for using the Experience API (XAPI). The Experience API (XAPI) is also known as "next-gen SCORM" 
-or previously the TinCanAPI. The concept of the LRS was introduced to the e-learning industry in 2011, 
+A Learning Record Store (LRS) is a data store that serve as a repository for learning records
+necessary for using the Experience API (XAPI). The Experience API (XAPI) is also known as "next-gen SCORM"
+or previously the TinCanAPI. The concept of the LRS was introduced to the e-learning industry in 2011,
 and is a shift to the way e-learning specifications function.
 
 =============
@@ -52,6 +52,12 @@ lrs.tincanapi.basicAuthUserPass=UUUUUU:PPPPPP
 # OAuth realm
 #lrs.tincanapi.realm=ZZZZZ
 
+## LRS Settings
+# Inverse functional identifier type
+# Valid types: account, mbox, mbox_sha1sum, openid* (* = NOT IMPLEMENTED)
+# DEFAULT: account ("account":{"name":"USER_EID", "homePage":"SAKAI_URL"})
+# Value MUST BE unique, as LRS only allow a single identifier in statement actor data
+#lrs.tincanapi.inverse.functional.identifier=account
 
 ============
 INSTALLATION
@@ -61,14 +67,22 @@ Requires version 10 of Sakai or better.
 Download or checkout the Unicon TinCanAPI provider (this README is part of it).
 https://github.com/Apereo-Learning-Analytics-Initiative/SakaiXAPI-Provider
 
+Switch to the branch you are running (10.x, 11.x, etc.)
+
 Build the code using maven 2 or 3:
 mvn clean install sakai:deploy
 
 Add the config (as shown in the config section above).
 
-Restart the Sakai server and check the logs. You should see some LRS INFO logs 
+Restart the Sakai server and check the logs. You should see some LRS INFO logs
 about a successful init OR error messages that explain the problem.
 
+---------------------
+NOTES
+---------------------
+There are Kernel patches you will need to deploy:
+https://jira.sakaiproject.org/browse/KNL-1429
+https://jira.sakaiproject.org/browse/KNL-1446
 
 ---------------------
 NOTES for 2.9.x users
@@ -78,5 +92,5 @@ https://jira.sakaiproject.org/browse/KNL-1043
 https://jira.sakaiproject.org/browse/KNL-1045
 https://jira.sakaiproject.org/browse/SAK-23566
 
-
+-Robert Long (rlong @ unicon.net)
 -Aaron Zeckoski (azeckoski @ unicon.net) (azeckoski @ vt.edu)
