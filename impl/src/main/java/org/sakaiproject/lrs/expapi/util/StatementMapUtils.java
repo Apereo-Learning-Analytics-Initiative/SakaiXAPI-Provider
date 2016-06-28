@@ -17,7 +17,10 @@ package org.sakaiproject.lrs.expapi.util;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang.StringUtils;
+import org.sakaiproject.component.api.ServerConfigurationService;
+import org.sakaiproject.component.cover.ComponentManager;
 import org.sakaiproject.event.api.LearningResourceStoreService.LRS_Actor;
 import org.sakaiproject.event.api.LearningResourceStoreService.LRS_Context;
 import org.sakaiproject.event.api.LearningResourceStoreService.LRS_Object;
@@ -36,11 +39,28 @@ public class StatementMapUtils implements LRSKeys {
     /**
      * @return a map of the actor values
      */
-    public static Map<String, String> getActorMap(LRS_Actor actor) {
-        HashMap<String, String> actorMap = new NonNullValueHashMap<>();
-        actorMap.put(LRSActorKey.mbox.toString(), actor.getMbox());
+    public static Map<String, Object> getActorMap(LRS_Actor actor) {
+        HashMap<String, Object> actorMap = new NonNullValueHashMap<>();
+
         actorMap.put(LRSActorKey.name.toString(), actor.getName());
         actorMap.put(LRSActorKey.objectType.toString(), actor.getObjectType());
+
+        ServerConfigurationService serverConfigurationService = (ServerConfigurationService) ComponentManager.get(ServerConfigurationService.class);
+        String identifier = serverConfigurationService.getString(INVERSE_FUNCTIONAL_IDENTIFIER_PROPERTY, LRSIdentifierKey.account.toString());
+
+        if (StringUtils.equalsIgnoreCase(identifier, LRSIdentifierKey.mbox.toString())) {
+            actorMap.put(LRSIdentifierKey.mbox.toString(), actor.getMbox());
+        } else if (StringUtils.equalsIgnoreCase(identifier, LRSIdentifierKey.mbox_sha1sum.toString())) {
+            actorMap.put(LRSIdentifierKey.mbox_sha1sum.toString(), DigestUtils.sha1Hex(actor.getMbox()));
+        } else if (StringUtils.equalsIgnoreCase(identifier, LRSIdentifierKey.openid.toString())) {
+            actorMap.put(LRSActorKey.openid.toString(), actor.getOpenid());
+        } else {
+            // default to "account"
+            HashMap<String, String> accountMap = new NonNullValueHashMap<String, String>();
+            accountMap.put(LRSActorKey.name.toString(), actor.getAccount().getName());
+            accountMap.put(LRSActorKey.homePage.toString(), actor.getAccount().getHomePage());
+            actorMap.put(LRSActorKey.account.toString(), accountMap);
+        }
 
         return actorMap;
     }
