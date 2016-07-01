@@ -52,7 +52,7 @@ import org.slf4j.LoggerFactory;
  */
 public class TincanapiLearningResourceStoreProvider implements LearningResourceStoreProvider, LRSKeys {
 
-    private static final Logger logger = LoggerFactory.getLogger(TincanapiLearningResourceStoreProvider.class);
+    private static final Logger log = LoggerFactory.getLogger(TincanapiLearningResourceStoreProvider.class);
 
     private static final String apiVersion = "1.0.0";
     private static final HashMap<String, String> EMPTY_PARAMS = new HashMap<>(0);
@@ -105,7 +105,7 @@ public class TincanapiLearningResourceStoreProvider implements LearningResourceS
             statementMap.put(LRSStatementKey.verb.toString(), StatementMapUtils.getVerbMap(statement.getVerb()));
             statementMap.put(LRSStatementKey.object.toString(), StatementMapUtils.getObjectMap(statement.getObject()));
         } catch (Exception e) {
-            logger.debug("Unable to handle supplied LRS_Statement", e);
+            log.debug("Unable to handle supplied LRS_Statement", e);
             throw new IllegalArgumentException("Unable to handle supplied LRS_Statement.\nUnable to process Actor, Verb, or Object");
         }
 
@@ -136,7 +136,7 @@ public class TincanapiLearningResourceStoreProvider implements LearningResourceS
             try {
                 httpClientWrapper.shutdown();
             } catch (Exception e) {
-                e.printStackTrace();
+                log.error("Error upon destroying TinCanAPI provider.", e);
             }
 
             httpClientWrapper = null;
@@ -156,27 +156,27 @@ public class TincanapiLearningResourceStoreProvider implements LearningResourceS
 
         if (statement.isPopulated()) {
             data = convertLRS_StatementToJSON(statement);
-            logger.debug("LRS using populated statement: {}", data);
+            log.debug("LRS using populated statement: {}", data);
         } else if (statement.getRawMap() != null && !statement.getRawMap().isEmpty()) {
             data = jsonTranscoder.encode(statement.getRawMap(), null, null);
-            logger.debug("LRS using raw Map statement: {}", data);
+            log.debug("LRS using raw Map statement: {}", data);
         } else {
             data = statement.getRawJSON();
-            logger.debug("LRS using raw JSON statement: {}", data);
+            log.debug("LRS using raw JSON statement: {}", data);
         }
 
-        logger.debug("LRS Attempting to handle statement: {}", statement);
+        log.debug("LRS Attempting to handle statement: {}", statement);
 
         try {
             HttpResponse response = postData(data);
             if (response.getResponseCode() >= 200 && response.getResponseCode() < 300) {
-                logger.debug(id + " LRS provider successfully sent statement: {}", statement);
+                log.debug("{} LRS provider successfully sent statement: {}", id, statement);
             } else {
-                logger.warn(id + " LRS provider failed ({} {}) sending statement ({}) to ({}), response: {}",
-                    response.getResponseCode(), response.getResponseMessage(), statement, url, response.getResponseBody());
+                log.warn("{} LRS provider failed ({} {}) sending statement ({}) to ({}), response: {}",
+                    id, response.getResponseCode(), response.getResponseMessage(), statement, url, response.getResponseBody());
             }
         } catch (Exception e) {
-            logger.error(id + " LRS provider exception (" + e + "): Statement was not sent.\n Statement data: " + data);
+            log.error("{} LRS provider exception: Statement was not sent.\n Statement data: {}", id, data, e);
         }
     }
 
@@ -190,7 +190,7 @@ public class TincanapiLearningResourceStoreProvider implements LearningResourceS
     public void init() throws OAuthException, IOException, URISyntaxException {
         readConfig();
         // Don't allow api version to be configured... we only should be reporting it
-        logger.info("{} LRS provider (version {}) configured: {}", id, apiVersion, url);
+        log.info("{} LRS provider (version {}) configured: {}", id, apiVersion, url);
         
         headers = new HashMap<>(3);
         headers.put("Content-Type", "application/json");
@@ -212,15 +212,15 @@ public class TincanapiLearningResourceStoreProvider implements LearningResourceS
             response = postData(TEST_CONN_MESSAGE);
 
             if (response.getResponseCode() == 200) {
-                logger.info("{} LRS provider configured and ready", id);
+                log.info("{} LRS provider configured and ready", id);
             } else {
-                logger.error("{} LRS provider not configured properly OR LRS is offline - test message failed!", id);
+                log.error("{} LRS provider not configured properly OR LRS is offline - test message failed!", id);
             }
         } catch (Exception e) {
-            logger.error("{} LRS provider failure while trying to contact the LRS! Initialization test failed: ", id, e);
+            log.error("{} LRS provider failure while trying to contact the LRS! Initialization test failed: ", id, e);
         }
 
-        logger.info("{} LRS provider INIT complete", id);
+        log.info("{} LRS provider INIT complete", id);
     }
 
     private HttpResponse postData(String data) throws OAuthException, IOException, URISyntaxException {
@@ -267,7 +267,7 @@ public class TincanapiLearningResourceStoreProvider implements LearningResourceS
             timeout = StringUtils.isNotEmpty(value) ? Integer.parseInt(value) : timeout; // allow setter to override
         } catch (NumberFormatException e) {
                 timeout = 0;
-                logger.debug("{} request.timeout must be an integer value - using default setting", configPrefix, e);
+                log.debug("{} request.timeout must be an integer value - using default setting", configPrefix, e);
         }
 
         // basic auth
