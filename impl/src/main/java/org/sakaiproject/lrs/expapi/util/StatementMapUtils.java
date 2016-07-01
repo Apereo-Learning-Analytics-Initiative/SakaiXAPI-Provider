@@ -102,7 +102,6 @@ public class StatementMapUtils implements LRSKeys {
         return objectMap;
     }
 
-
     /**
      * @return a map of the values from the LRS result
      */
