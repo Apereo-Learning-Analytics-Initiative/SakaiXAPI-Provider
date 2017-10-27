@@ -10,7 +10,7 @@
   <parent>
     <artifactId>master</artifactId>
     <groupId>org.sakaiproject</groupId>
-    <version>12-SNAPSHOT</version>
+    <version>13-SNAPSHOT</version>
     <relativePath>../master/pom.xml</relativePath>
   </parent>
 
@@ -21,7 +21,6 @@
 
   <modules>
     <module>impl</module>
-    <module>pack</module>
   </modules>
 
   <dependencyManagement>
@@ -29,7 +28,7 @@
       <dependency>
         <groupId>org.sakaiproject</groupId>
         <artifactId>tincanapi-provider-impl</artifactId>
-        <version>12-SNAPSHOT</version>
+        <version>13-SNAPSHOT</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
