@@ -5,7 +5,7 @@
   <parent>
     <artifactId>tincanapi-provider-base</artifactId>
     <groupId>org.sakaiproject</groupId>
-    <version>12-SNAPSHOT</version>
+    <version>13-SNAPSHOT</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
   <name>Sakai tincanapi LRS Provider Impl</name>
@@ -15,7 +15,11 @@
     <url>http://unicon.net/</url>
   </organization>
   <inceptionYear>2013</inceptionYear>
-  <packaging>jar</packaging>
+  <packaging>sakai-component</packaging>
+
+  <properties>
+      <deploy.target>components</deploy.target>
+  </properties>
 
   <dependencies>
     <!-- Sakai dependencies -->
