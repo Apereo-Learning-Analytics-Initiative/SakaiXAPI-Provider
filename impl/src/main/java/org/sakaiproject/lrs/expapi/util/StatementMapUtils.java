@@ -57,8 +57,17 @@ public class StatementMapUtils implements LRSKeys {
         } else {
             // default to "account"
             HashMap<String, String> accountMap = new NonNullValueHashMap<String, String>();
-            accountMap.put(LRSActorKey.name.toString(), actor.getAccount().getName());
-            accountMap.put(LRSActorKey.homePage.toString(), actor.getAccount().getHomePage());
+            String name = actor.getAccount().getName();
+            if (StringUtils.isBlank(name)) {
+                name = "unknown";
+            }
+            accountMap.put(LRSActorKey.name.toString(), name);
+
+            String homePage = actor.getAccount().getHomePage();
+            if (StringUtils.isBlank(homePage)) {
+                homePage = serverConfigurationService.getServerUrl();
+            }
+            accountMap.put(LRSActorKey.homePage.toString(), homePage);
             actorMap.put(LRSActorKey.account.toString(), accountMap);
         }
 
