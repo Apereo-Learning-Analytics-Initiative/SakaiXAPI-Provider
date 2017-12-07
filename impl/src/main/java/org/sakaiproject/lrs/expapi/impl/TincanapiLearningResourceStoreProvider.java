@@ -170,10 +170,10 @@ public class TincanapiLearningResourceStoreProvider implements LearningResourceS
         try {
             HttpResponse response = postData(data);
             if (response.getResponseCode() >= 200 && response.getResponseCode() < 300) {
-                log.debug("{} LRS provider successfully sent statement: {}", id, statement);
+                log.debug("{} LRS provider successfully sent statement data: {}", id, data);
             } else {
-                log.warn("{} LRS provider failed ({} {}) sending statement ({}) to ({}), response: {}",
-                    id, response.getResponseCode(), response.getResponseMessage(), statement, url, response.getResponseBody());
+                log.warn("{} LRS provider failed ({} {}) sending statement data ({}) to ({}), response: {}",
+                    id, response.getResponseCode(), response.getResponseMessage(), data, url, response.getResponseBody());
             }
         } catch (Exception e) {
             log.error("{} LRS provider exception: Statement was not sent.\n Statement data: {}", id, data, e);
