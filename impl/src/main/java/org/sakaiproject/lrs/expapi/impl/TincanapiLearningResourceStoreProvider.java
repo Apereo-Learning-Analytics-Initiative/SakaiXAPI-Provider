@@ -26,9 +26,9 @@ import net.oauth.OAuthMessage;
 import net.oauth.OAuthServiceProvider;
 
 import org.apache.commons.codec.binary.Base64;
-import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.time.DateFormatUtils;
-import org.apache.commons.lang.time.FastDateFormat;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.time.DateFormatUtils;
+import org.apache.commons.lang3.time.FastDateFormat;
 import org.apache.commons.validator.routines.UrlValidator;
 import org.azeckoski.reflectutils.transcoders.JSONTranscoder;
 import org.sakaiproject.component.api.ServerConfigurationService;
